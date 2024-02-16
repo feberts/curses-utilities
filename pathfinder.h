@@ -5,6 +5,7 @@
 #include "position.h"
 
 typedef std::stack<Position> Path;
+typedef std::vector<Position> Positions;
 
 class Pathfinder : private graph::Graph
 {
@@ -20,7 +21,6 @@ public:
     Path path(const Position & src, const Position & dest);
     Distance path_length() const;
 
-    typedef std::vector<Position> Positions;
     void ignore_nodes(const Positions & positions);
 
 private:
