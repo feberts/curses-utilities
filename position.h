@@ -8,8 +8,7 @@ struct Position
     Distance v;
     Distance h;
 
-    Position(const Distance v, const Distance h) : v(v), h(h) { }
-    Position() = delete;
+    Position(const Distance v = 0, const Distance h = 0) : v(v), h(h) { }
 
     bool operator==(const Position & other) const;
     bool operator!=(const Position & other) const;
