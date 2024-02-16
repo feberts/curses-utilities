@@ -10,7 +10,7 @@ class Pathfinder : private graph::Graph
 {
 public:
 
-    Pathfinder(const Distance map_size_v, const Distance map_size_h);
+    Pathfinder(const Distance map_size_v, const Distance map_size_h, const Distance padding);
     Pathfinder() = delete;
 
     void add_node(const Position & pos);
@@ -27,6 +27,7 @@ private:
 
     const Distance m_map_size_v;
     const Distance m_map_size_h;
+    const Distance m_padding;
 
     Position to_position(const graph::Node_id id) const;
     graph::Node_id to_id(const Position & pos) const;

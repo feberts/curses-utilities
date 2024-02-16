@@ -5,33 +5,52 @@
 #include <cassert>
 #include <deque>
 
-Pathfinder::Pathfinder(const Distance map_size_v, const Distance map_size_h)
-    : m_map_size_v(map_size_v), m_map_size_h(map_size_h)
+#ifndef NDEBUG
+bool on_map(const Position & pos, const Distance map_size_v,
+            const Distance map_size_h, const Distance padding)
+{
+    return pos.v >= 0 + padding
+        && pos.h >= 0 + padding
+        && pos.v < map_size_v - padding
+        && pos.h < map_size_h - padding;
+}
+#endif
+
+Pathfinder::Pathfinder(const Distance map_size_v, const Distance map_size_h, const Distance padding)
+    : m_map_size_v(map_size_v), m_map_size_h(map_size_h), m_padding(padding)
 {
     assert(map_size_v > 0 && map_size_h > 0 && "map size must be > 0");
+    assert(padding >= 0 && "padding must not be < 0");
 }
 
 void Pathfinder::add_node(const Position & pos)
 {
-    assert(pos.v >= 0 && pos.h >= 0
-        && pos.v < m_map_size_v && pos.h < m_map_size_h
-        && "node cannot be placed outside map");
+    assert(on_map(pos, m_map_size_v, m_map_size_h, m_padding) && "node outside map");
 
     Graph::add_node(to_id(pos));
 }
 
 void Pathfinder::add_edge(const Position & first, const Position & second, const Distance dist)
 {
+    assert(on_map(first, m_map_size_v, m_map_size_h, m_padding) && "first node outside map");
+    assert(on_map(second, m_map_size_v, m_map_size_h, m_padding) && "second node outside map");
+
     Graph::add_edge(to_id(first), to_id(second), dist);
 }
 
 void Pathfinder::add_directed_edge(const Position & src, const Position & dest, const Distance dist)
 {
+    assert(on_map(src, m_map_size_v, m_map_size_h, m_padding) && "src node outside map");
+    assert(on_map(dest, m_map_size_v, m_map_size_h, m_padding) && "dest node outside map");
+
     Graph::add_directed_edge(to_id(src), to_id(dest), dist);
 }
 
 Path Pathfinder::path(const Position & src, const Position & dest)
 {
+    assert(on_map(src, m_map_size_v, m_map_size_h, m_padding) && "src node outside map");
+    assert(on_map(dest, m_map_size_v, m_map_size_h, m_padding) && "dest node outside map");
+
     graph::Path path = Graph::path(to_id(src), to_id(dest));
 
     std::deque<Position> steps;
@@ -56,6 +75,8 @@ void Pathfinder::ignore_nodes(const Positions & positions)
 
     for(const Position & pos : positions)
     {
+        assert(on_map(pos, m_map_size_v, m_map_size_h, m_padding) && "node outside map");
+
         ids.push_back(to_id(pos));
     }
 
