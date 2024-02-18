@@ -3,7 +3,6 @@
 // #define NDEBUG // uncomment to disable asserts
 
 #include <cassert>
-#include <ncurses.h>
 
 const Distance H_STRETCH = 2; // 1 = no horizontal stretching
 
@@ -100,4 +99,13 @@ void get_window_size(Distance & size_v, Distance & size_h)
     getmaxyx(stdscr, size_v, size_h);
     size_h += H_STRETCH - 1;
     size_h /= H_STRETCH;
+}
+
+void press_any_key(const Distance v, const Distance h, const string & msg, const char key)
+{
+    print(v, h, msg);
+    flushinp();
+    if(key == ERR) { while(key == getch()); }
+    else           { while(key != getch()); }
+    flushinp();
 }
