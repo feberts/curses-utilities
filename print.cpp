@@ -109,3 +109,9 @@ void press_any_key(const Distance v, const Distance h, const string & msg, const
     else           { while(key != getch()); }
     flushinp();
 }
+
+void quit()
+{
+    endwin();
+    exit(0);
+}
