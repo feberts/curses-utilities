@@ -14,6 +14,7 @@ bool on_map(const Position & pos, const Distance map_size_v,
         && pos.v < map_size_v - padding
         && pos.h < map_size_h - padding;
 }
+#define ON_MAP_ARGS m_map_size_v, m_map_size_h, m_padding
 #endif
 
 Pathfinder::Pathfinder(const Distance map_size_v, const Distance map_size_h, const Distance padding)
@@ -25,31 +26,31 @@ Pathfinder::Pathfinder(const Distance map_size_v, const Distance map_size_h, con
 
 void Pathfinder::add_node(const Position & pos)
 {
-    assert(on_map(pos, m_map_size_v, m_map_size_h, m_padding) && "node outside map");
+    assert(on_map(pos, ON_MAP_ARGS) && "node outside map");
 
     Graph::add_node(to_id(pos));
 }
 
 void Pathfinder::add_edge(const Position & first, const Position & second, const Distance dist)
 {
-    assert(on_map(first, m_map_size_v, m_map_size_h, m_padding) && "first node outside map");
-    assert(on_map(second, m_map_size_v, m_map_size_h, m_padding) && "second node outside map");
+    assert(on_map(first, ON_MAP_ARGS) && "first node outside map");
+    assert(on_map(second, ON_MAP_ARGS) && "second node outside map");
 
     Graph::add_edge(to_id(first), to_id(second), dist);
 }
 
 void Pathfinder::add_directed_edge(const Position & src, const Position & dest, const Distance dist)
 {
-    assert(on_map(src, m_map_size_v, m_map_size_h, m_padding) && "src node outside map");
-    assert(on_map(dest, m_map_size_v, m_map_size_h, m_padding) && "dest node outside map");
+    assert(on_map(src, ON_MAP_ARGS) && "src node outside map");
+    assert(on_map(dest, ON_MAP_ARGS) && "dest node outside map");
 
     Graph::add_directed_edge(to_id(src), to_id(dest), dist);
 }
 
 Path Pathfinder::path(const Position & src, const Position & dest)
 {
-    assert(on_map(src, m_map_size_v, m_map_size_h, m_padding) && "src node outside map");
-    assert(on_map(dest, m_map_size_v, m_map_size_h, m_padding) && "dest node outside map");
+    assert(on_map(src, ON_MAP_ARGS) && "src node outside map");
+    assert(on_map(dest, ON_MAP_ARGS) && "dest node outside map");
 
     graph::Path path = Graph::path(to_id(src), to_id(dest));
 
@@ -75,7 +76,7 @@ void Pathfinder::ignore_nodes(const Positions & positions)
 
     for(const Position & pos : positions)
     {
-        assert(on_map(pos, m_map_size_v, m_map_size_h, m_padding) && "node outside map");
+        assert(on_map(pos, ON_MAP_ARGS) && "node outside map");
 
         ids.push_back(to_id(pos));
     }
