@@ -1,7 +1,4 @@
 #include "pathfinder.h"
-
-// #define NDEBUG // uncomment to disable asserts
-
 #include <cassert>
 #include <deque>
 

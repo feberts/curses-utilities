@@ -1,7 +1,4 @@
 #include "print.h"
-
-// #define NDEBUG // uncomment to disable asserts
-
 #include <cassert>
 
 const Distance H_STRETCH = 2; // 1 = no horizontal stretching
