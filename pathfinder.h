@@ -11,8 +11,7 @@ class Pathfinder : private graph::Graph
 {
 public:
 
-    Pathfinder(const Distance map_size_v, const Distance map_size_h, const Distance padding);
-    Pathfinder() = delete;
+    Pathfinder(const Distance map_size_v, const Distance map_size_h, const Distance padding = 0);
 
     void add_node(const Position & pos);
     void add_edge(const Position & first, const Position & second, const Distance dist = 1);
