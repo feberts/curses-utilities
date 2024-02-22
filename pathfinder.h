@@ -20,7 +20,7 @@ public:
     Path path(const Position & src, const Position & dest);
     Distance path_length() const;
 
-    void ignore_nodes(const Positions & positions);
+    void block_nodes(const Positions & positions);
 
 private:
 

@@ -67,7 +67,7 @@ Distance Pathfinder::path_length() const
     return Graph::path_length();
 }
 
-void Pathfinder::ignore_nodes(const Positions & positions)
+void Pathfinder::block_nodes(const Positions & positions)
 {
     graph::Node_ids ids;
 
@@ -78,7 +78,7 @@ void Pathfinder::ignore_nodes(const Positions & positions)
         ids.push_back(to_id(pos));
     }
 
-    Graph::ignore_nodes(ids);
+    Graph::block_nodes(ids);
 }
 
 Position Pathfinder::to_position(const graph::Node_id id) const
