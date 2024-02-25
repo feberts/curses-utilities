@@ -102,9 +102,28 @@ void press_any_key(const Distance v, const Distance h, const string & msg, const
 {
     print(v, h, msg);
     flushinp();
-    if(key == ERR) { while(key == getch()); }
-    else           { while(key != getch()); }
+    if(key == ERR) { while(key == getch()) { napms(10); } }
+    else           { while(key != getch()) { napms(10); } }
     flushinp();
+}
+
+char menu(Distance v, const Distance h, const map<char, string> & menu_entries)
+{
+    for(const auto & [key, description] : menu_entries)
+    {
+        print(v++, h, string(1, key) + " - " + description);
+    }
+
+    char input;
+
+    do
+    {
+        input = getch();
+        napms(10);
+    }
+    while(!menu_entries.count(input));
+
+    return input;
 }
 
 void quit()

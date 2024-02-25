@@ -2,6 +2,7 @@
 #define PRINT_H
 
 #include "position.h"
+#include <map>
 #include <ncurses.h>
 #include <string>
 
@@ -19,6 +20,9 @@ Position click_position(const Distance clicked_v, const Distance clicked_h);
 void get_window_size(Distance & size_v, Distance & size_h);
 
 void press_any_key(const Distance v = 0, const Distance h = 0, const std::string & msg = "press any key to continue", const char key = ERR);
+char menu(Distance v, const Distance h, const std::map<char, std::string> & menu_entries);
+
 void quit();
+
 
 #endif // PRINT_H
